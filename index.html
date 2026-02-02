@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Link</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffb6c1, #ffc0cb, #ffe4e1);
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 2.8em;
+    color: #ff1493;
+    margin-bottom: 30px;
+  }
+
+  button {
+    font-size: 1.5em;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    margin: 10px;
+    transition: transform 0.2s;
+  }
+
+  #yes {
+    background-color: #ff69b4;
+    color: white;
+  }
+
+  #no {
+    background-color: #ff1493;
+    color: white;
+    position: absolute;
+  }
+
+  #loveText {
+    display: none;
+    font-size: 3em;
+    color: #ff1493;
+    margin-top: 20px;
+  }
+
+  img {
+    max-width: 300px;
+    border-radius: 15px;
+    margin-top: 25px;
+  }
+
+  .confetti, .balloon {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .confetti {
+    animation: fall 3s linear forwards;
+    font-size: 22px;
+  }
+
+  @keyframes fall {
+    0% { top: -50px; opacity: 1; }
+    100% { top: 100vh; opacity: 0; }
+  }
+
+  .balloon {
+    animation: floatUp linear forwards;
+    font-size: 40px;
+  }
+
+  @keyframes floatUp {
+    0% { bottom: -60px; opacity: 1; }
+    100% { bottom: 110vh; opacity: 0; }
+  }
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="jhoom.mp3" loop></audio>
+
+<h1>Safa my love, will you be my Valentine? 💖</h1>
+
+<button id="yes">Yes ❤️</button>
+<button id="no">No 😜</button>
+
+<div id="loveText">I ❤️ You</div>
+
+<img id="gif" src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExOGJnZXU1N2JuZTk5N3lkNnFpZ3ozZjA2cmM0OGUxaTNlbmN6M3pxeCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9mbWF6cH4hSs8/giphy.gif">
+
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const loveText = document.getElementById("loveText");
+const gif = document.getElementById("gif");
+const music = document.getElementById("music");
+
+// Start music on first interaction
+document.addEventListener("click", function startMusic() {
+  music.play();
+  document.removeEventListener("click", startMusic);
+});
+
+// YES button
+yesBtn.addEventListener("click", () => {
+  loveText.style.display = "block";
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+
+  gif.src = "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExd2Rqa3F2Z3h0cjNud2o2MnUyd2tjbHE3ejJhbGJ2czVtcDQ3MDE2NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/blSTtZehjAZ8I/giphy.gif";
+
+  heartsConfetti(40);
+  floatingBalloons();
+});
+
+// NO button movement
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+  noBtn.style.transform = `scale(${Math.random() * 0.6 + 0.5})`;
+});
+
+// Confetti hearts
+function heartsConfetti(count) {
+  for (let i = 0; i < count; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.textContent = "💖";
+    c.style.left = Math.random() * window.innerWidth + "px";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+
+// Balloon hearts
+function floatingBalloons() {
+  setInterval(() => {
+    const b = document.createElement("div");
+    b.className = "balloon";
+    b.textContent = "🎈💖";
+    b.style.left = Math.random() * window.innerWidth + "px";
+    b.style.animationDuration = (6 + Math.random() * 4) + "s";
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 10000);
+  }, 1200);
+}
+</script>
+
+</body>
+</html>
